@@ -1,12 +1,14 @@
 package com.vedant.interview;
 
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
 	public static Scanner scan = new Scanner(System.in);
 	public static Random rand = new Random();
+	public static int MAX_ALLOWED_GUESSES = 10;
+	public static int MIN_ALLOWED_RANGE = 10;
 
 	public static void main(String[] args) {
 
@@ -16,7 +18,7 @@ public class Main {
 		String userName = scan.nextLine();
 		Boolean validResponse = false;
 		do {
-			System.out.println("Would you like to play The Guessing Game [1] or the Reverse Guessing game [2]?: ");
+			System.out.println("Would you like to play \n[1] The Guessing Game\n[2] The Reverse Guessing Game?\n[3] Exit");
 			String playGame = scan.nextLine();
 			if (isANumber(playGame)) {
 				gameSel = Integer.parseInt(playGame);
@@ -24,12 +26,15 @@ public class Main {
 
 			if (gameSel == 1) {
 				System.out.println("Welcome to Guessing Game, " + userName);
-				GuessingGame();
+				GuessingGame(userName);
 				validResponse = true;
 			} else if (gameSel == 2) {
 				System.out.println("Welcome to Reverse Guessing Game, " + userName);
-				ReverseGuessingGame();
+				ReverseGuessingGame(userName);
 				validResponse = true;
+			} else if (gameSel == 3){
+				System.exit(0);
+				
 			}
 
 			if (!validResponse) {
@@ -69,7 +74,7 @@ public class Main {
 
 	}
 
-	public static void GuessingGame() {
+	public static void GuessingGame(String userName) {
 		boolean rangeCorrect = false;
 		boolean correctGuess = false;
 		int minval = 0, maxval = 100;
@@ -95,10 +100,10 @@ public class Main {
 			}
 
 			// NUMBERCHECK
-			if (minval < maxval && (minval + 10) <= maxval) {
+			if (minval < maxval && (minval + MIN_ALLOWED_RANGE) <= maxval) {
 				rangeCorrect = true;
 			} else {
-				System.out.println("The minimum has to be less then the maximum, and at least 10 numbers apart "
+				System.out.println("The minimum has to be less then the maximum, and at least " + MIN_ALLOWED_RANGE + " numbers apart "
 						+ minval + " " + maxval);
 			}
 
@@ -117,7 +122,7 @@ public class Main {
 				guess = Integer.parseInt(guessS);
 			}
 
-			//Register Guess and add to array
+			// Register Guess and add to array
 			guessCount++;
 			UserGuesses = addListNum(UserGuesses, guess);
 
@@ -129,22 +134,32 @@ public class Main {
 				System.out.println("Too High! Guess again");
 			}
 
-			//End after 10 guesses
-			if (guessCount > 10) {
+			// End after MIN_ALLOWED_GUESSES guesses
+			if (guessCount > MAX_ALLOWED_GUESSES) {
 				break;
 			}
 
 		} while (!correctGuess);
-		System.out.println(randomNumberGen + " was correct! It took you " + guessCount + " tries");
-		
-		System.out.println("Your Guesses: " + (UserGuesses.length -1));
-		for (int i = 1 /*Set to 1 to ignore value 0 in array*/; i < UserGuesses.length; i++){
-			System.out.print(UserGuesses[i] + " ");
+		if (correctGuess){
+			System.out.println("Congrats, " + userName + ", you guessed my number in " + guessCount + " attempts");
 		}
-		
+		else{
+			System.out.println("Sorry Bob, you did not guess my number - it's" + randomNumberGen + "!");
+		}
+
+		System.out.println("Here's a list of your prior guesses: ");
+		for (int i = 1 /* Set to 1 to ignore value 0 in array */; i < UserGuesses.length; i++) {
+			System.out.print(UserGuesses[i]);
+
+			// Commas are 1 less than the numbers
+			if (i < UserGuesses.length - 1) {
+				System.out.print(", ");
+			}
+		}
+
 	}
 
-	public static void ReverseGuessingGame() {
+	public static void ReverseGuessingGame(String userName) {
 
 		System.out.println("Please think of a number for me to guess");
 		System.out.println("Please input a range for me to guess from");
@@ -171,11 +186,11 @@ public class Main {
 				maxval = Integer.parseInt(maxvalString);
 			}
 
-			// NUMBERCHECK
-			if (minval < maxval && (minval + 10) <= maxval) {
+			// RANGE IS VALIDATED
+			if (minval < maxval && (minval + MIN_ALLOWED_RANGE) <= maxval) {
 				rangeCorrect = true;
 			} else {
-				System.out.println("The minimum has to be less then the maximum, and at least 10 numbers apart "
+				System.out.println("The minimum has to be less then the maximum, and at least " + MIN_ALLOWED_RANGE + " numbers apart "
 						+ minval + " " + maxval);
 			}
 
@@ -184,8 +199,8 @@ public class Main {
 
 		do {
 			int computerGuess = guess(minval, maxval);
-			
-			//Register guess
+
+			// Register guess
 			guessCount++;
 			UserGuesses = addListNum(UserGuesses, computerGuess);
 
@@ -198,8 +213,8 @@ public class Main {
 			if (response == 3) {
 				System.out.println("Yay! I won!");
 				correctGuess = true;
-			} else if ((maxval - minval) <= 2){
-				System.out.println("Assert: " + computerGuess);	
+			} else if ((maxval - minval) <= 2) {
+				System.out.println("Assert: " + computerGuess);
 				correctGuess = true;
 			} else if (response == 2) {
 				maxval = computerGuess;
@@ -208,14 +223,15 @@ public class Main {
 			} else {
 				System.out.println("Incorrect entry");
 			}
-			
 
 		} while (!correctGuess);
 		System.out.print("It took me " + guessCount + " tries. Here is a list of my guesses: ");
-		
-		for (int i = 1 /*Set to 1 to ignore value 0 in array*/; i < UserGuesses.length; i++){
+
+		for (int i = 1 /* Set to 1 to ignore value 0 in array */; i < UserGuesses.length; i++) {
 			System.out.print(UserGuesses[i]);
-			if (i < UserGuesses.length - 1){
+
+			// Commas are 1 less than the numbers
+			if (i < UserGuesses.length - 1) {
 				System.out.print(", ");
 			}
 		}
