@@ -119,7 +119,8 @@ public class Main {
 		resetVars();
 		boolean rangeCorrect = false;
 		boolean correctGuess = false;
-		int response = 0;
+		boolean userMislead = false;
+		int response = 0, userActualNumber = 50;
 
 		System.out.println("Please think of a number for me to guess");
 		System.out.println("Please input a range for me to guess from");
@@ -154,10 +155,31 @@ public class Main {
 			} else {
 				System.out.println("Incorrect entry");
 			}
-
+			
+			if (guessCount > MAX_ALLOWED_GUESSES){
+				break;
+			}
 		} while (!correctGuess);
-		System.out.print("It took me " + guessCount + " tries. Here is a list of my guesses: ");
+		if (correctGuess) {
+			System.out.println("Yay! I won!");
+		} else {
+			System.out.print("Sorry Bob, I have exceeded my tries. What was your number?: ");
+			String userActualNumberString = scan.nextLine();
+			if (isANumber(userActualNumberString)){
+				userActualNumber = Integer.parseInt(userActualNumberString);
+			}
+			for (int i = 0; i < UserGuesses.length; i++){
+				if (UserGuesses[i] == userActualNumber){
+					userMislead = true;
+				}
+			}
+		}
+		
+		if (userMislead){
+			System.out.println("I guessed that number!");
+		}
 
+		System.out.println("Here's a list of my prior guesses: ");
 		for (int i = 1 /* Set to 1 to ignore value 0 in array */; i < UserGuesses.length; i++) {
 			System.out.print(UserGuesses[i]);
 
@@ -166,6 +188,8 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
+		
+		
 	}
 
 	// This method makes sure the range is valid and doesn't complete until its
@@ -228,7 +252,7 @@ public class Main {
 
 		return arrdone;
 	}
-	
+
 	// This method makes sure the String inputed is indeed a number
 	public static boolean isANumber(String inRange) {
 		try {
