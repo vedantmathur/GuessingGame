@@ -10,6 +10,11 @@ public class Main {
 	public static int MAX_ALLOWED_GUESSES = 10;
 	public static int MIN_ALLOWED_RANGE = 10;
 
+	public static boolean rangeCorrect = false;
+	public static boolean correctGuess = false;
+	public static int minval = 0, maxval = 100, guessCount = 0;
+	public static int[] UserGuesses = new int[1];
+
 	public static void main(String[] args) {
 
 		int gameSel = 0;
@@ -18,7 +23,8 @@ public class Main {
 		String userName = scan.nextLine();
 		Boolean validResponse = false;
 		do {
-			System.out.println("Would you like to play \n[1] The Guessing Game\n[2] The Reverse Guessing Game?\n[3] Exit");
+			System.out.println(
+					"Would you like to play \n[1] The Guessing Game\n[2] The Reverse Guessing Game?\n[3] Exit");
 			String playGame = scan.nextLine();
 			if (isANumber(playGame)) {
 				gameSel = Integer.parseInt(playGame);
@@ -32,9 +38,9 @@ public class Main {
 				System.out.println("Welcome to Reverse Guessing Game, " + userName);
 				ReverseGuessingGame(userName);
 				validResponse = true;
-			} else if (gameSel == 3){
+			} else if (gameSel == 3) {
 				System.exit(0);
-				
+
 			}
 
 			if (!validResponse) {
@@ -45,69 +51,17 @@ public class Main {
 
 	}
 
-	public static int[] addListNum(int[] arr, int val) {
-
-		int[] temp = new int[arr.length + 1];
-		for (int i = 0; i < arr.length; i++) {
-			temp[i] = arr[i];
-		}
-		temp[arr.length] = val;
-
-		int[] arrdone = temp;
-
-		return arrdone;
-	}
-
-	public static boolean isANumber(String inRange) {
-		try {
-			Integer.parseInt(inRange);
-			return true;
-		} catch (/* GOOGLED */ NumberFormatException e) {
-			return false;
-		}
-	}
-
-	public static int guess(int minval, int maxval) {
-		int guessVal = (maxval + minval) / 2;
-
-		return guessVal;
-
-	}
-
+	// The code for the Guessing Game
 	public static void GuessingGame(String userName) {
-		boolean rangeCorrect = false;
-		boolean correctGuess = false;
-		int minval = 0, maxval = 100;
-		int randomNumberGen = 50, guessCount = 0, guess = 51;
-		int[] UserGuesses = new int[1];
+
+		// Reset variables from previous games
+		resetVars();
+		int randomNumberGen = 50, guess = 51;
 
 		System.out.println("Please input a range");
 
-		do {
-			// MIMIMUM default is 0
-			System.out.println("Minimum Value: ");
-			String minvalString = scan.nextLine();
-			// Send to check if it's a number
-			if (isANumber(minvalString)) {
-				minval = Integer.parseInt(minvalString);
-			}
+		rangeValidation();
 
-			// MAXIMUM default is 100
-			System.out.println("Maximum Value: ");
-			String maxvalString = scan.nextLine();
-			if (isANumber(maxvalString)) {
-				maxval = Integer.parseInt(maxvalString);
-			}
-
-			// NUMBERCHECK
-			if (minval < maxval && (minval + MIN_ALLOWED_RANGE) <= maxval) {
-				rangeCorrect = true;
-			} else {
-				System.out.println("The minimum has to be less then the maximum, and at least " + MIN_ALLOWED_RANGE + " numbers apart "
-						+ minval + " " + maxval);
-			}
-
-		} while (!rangeCorrect);
 		System.out.println("Your minimum value is " + minval + ", and your maximum value is " + maxval);
 
 		randomNumberGen = rand.nextInt(maxval) + minval; // Random number
@@ -140,10 +94,9 @@ public class Main {
 			}
 
 		} while (!correctGuess);
-		if (correctGuess){
+		if (correctGuess) {
 			System.out.println("Congrats, " + userName + ", you guessed my number in " + guessCount + " attempts");
-		}
-		else{
+		} else {
 			System.out.println("Sorry Bob, you did not guess my number - it's" + randomNumberGen + "!");
 		}
 
@@ -159,42 +112,20 @@ public class Main {
 
 	}
 
+	// The code for the Reverse Guessing Game
 	public static void ReverseGuessingGame(String userName) {
+
+		// Reset variables from previous games
+		resetVars();
+		boolean rangeCorrect = false;
+		boolean correctGuess = false;
+		int response = 0;
 
 		System.out.println("Please think of a number for me to guess");
 		System.out.println("Please input a range for me to guess from");
 
-		boolean rangeCorrect = false;
-		boolean correctGuess = false;
-		int minval = 0, maxval = 100, response = 0;
-		int guessCount = 0;
-		int[] UserGuesses = new int[1];
+		rangeValidation();
 
-		do {
-			// MIMIMUM default is 0
-			System.out.println("Minimum Value: ");
-			String minvalString = scan.nextLine();
-			// Send to check if it's a number
-			if (isANumber(minvalString)) {
-				minval = Integer.parseInt(minvalString);
-			}
-
-			// MAXIMUM default is 100
-			System.out.println("Maximum Value: ");
-			String maxvalString = scan.nextLine();
-			if (isANumber(maxvalString)) {
-				maxval = Integer.parseInt(maxvalString);
-			}
-
-			// RANGE IS VALIDATED
-			if (minval < maxval && (minval + MIN_ALLOWED_RANGE) <= maxval) {
-				rangeCorrect = true;
-			} else {
-				System.out.println("The minimum has to be less then the maximum, and at least " + MIN_ALLOWED_RANGE + " numbers apart "
-						+ minval + " " + maxval);
-			}
-
-		} while (!rangeCorrect);
 		System.out.println("Your minimum value is " + minval + ", and your maximum value is " + maxval);
 
 		do {
@@ -235,5 +166,78 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
+	}
+
+	// This method makes sure the range is valid and doesn't complete until its
+	// within parameters
+	public static void rangeValidation() {
+		do {
+			// MIMIMUM default is 0
+			System.out.println("Minimum Value: ");
+			String minvalString = scan.nextLine();
+			// Send to check if it's a number
+			if (isANumber(minvalString)) {
+				minval = Integer.parseInt(minvalString);
+			}
+
+			// MAXIMUM default is 100
+			System.out.println("Maximum Value: ");
+			String maxvalString = scan.nextLine();
+			if (isANumber(maxvalString)) {
+				maxval = Integer.parseInt(maxvalString);
+			}
+
+			// RANGE IS VALIDATED
+			if (minval < maxval && (minval + MIN_ALLOWED_RANGE) <= maxval) {
+				rangeCorrect = true;
+			} else {
+				System.out.println("The minimum has to be less then the maximum, and at least " + MIN_ALLOWED_RANGE
+						+ " numbers apart " + minval + " " + maxval);
+			}
+
+		} while (!rangeCorrect);
+	}
+
+	// This method resets variables back to standard
+	public static void resetVars() {
+		rangeCorrect = false;
+		correctGuess = false;
+		minval = 0;
+		maxval = 100;
+		guessCount = 0;
+		int[] UserGuesses = new int[1];
+	}
+
+	// This method adds a number to an array, a list of guesses
+	public static int[] addListNum(int[] arr, int val) {
+
+		int[] temp = new int[arr.length + 1];
+		for (int i = 0; i < arr.length; i++) {
+			temp[i] = arr[i];
+		}
+		temp[arr.length] = val;
+
+		int[] arrdone = temp;
+
+		return arrdone;
+	}
+
+	// This method makes sure the String inputted is indeed a number
+	public static boolean isANumber(String inRange) {
+		try {
+			Integer.parseInt(inRange);
+			return true;
+		} catch (/* GOOGLED */ NumberFormatException e) {
+			return false;
+		}
+	}
+
+	// This method generates a guess for the computer to give for the reverse
+	// guessing game
+	public static int guess(int minval, int maxval) {
+		int guessVal = (maxval + minval) / 2;
+
+		return guessVal;
+
 	}
 }
