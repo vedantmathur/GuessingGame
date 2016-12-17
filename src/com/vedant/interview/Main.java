@@ -169,22 +169,29 @@ public class Main {
 	}
 
 	// This method makes sure the range is valid and doesn't complete until its
-	// within parameters
+	// within parameters. If minval/maxval are not numbers, then its set to a
+	// common value to trigger an error
 	public static void rangeValidation() {
 		do {
+
 			// MIMIMUM default is 0
 			System.out.println("Minimum Value: ");
 			String minvalString = scan.nextLine();
 			// Send to check if it's a number
 			if (isANumber(minvalString)) {
 				minval = Integer.parseInt(minvalString);
+			} else {
+				minval = 0;
 			}
 
 			// MAXIMUM default is 100
 			System.out.println("Maximum Value: ");
 			String maxvalString = scan.nextLine();
+			// Send to check if it's a number
 			if (isANumber(maxvalString)) {
 				maxval = Integer.parseInt(maxvalString);
+			} else {
+				maxval = 0;
 			}
 
 			// RANGE IS VALIDATED
@@ -192,7 +199,7 @@ public class Main {
 				rangeCorrect = true;
 			} else {
 				System.out.println("The minimum has to be less then the maximum, and at least " + MIN_ALLOWED_RANGE
-						+ " numbers apart " + minval + " " + maxval);
+						+ " numbers apart. Both values have to be integers.");
 			}
 
 		} while (!rangeCorrect);
