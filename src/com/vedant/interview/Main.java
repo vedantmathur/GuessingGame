@@ -12,6 +12,7 @@ public class Main {
 
 	public static boolean rangeCorrect = false;
 	public static boolean correctGuess = false;
+	public static boolean playAgain = false;
 	public static int minval = 0, maxval = 100, guessCount = 0;
 	public static int[] UserGuesses = new int[1];
 
@@ -31,13 +32,19 @@ public class Main {
 			}
 
 			if (gameSel == 1) {
-				System.out.println("Welcome to Guessing Game, " + userName);
-				GuessingGame(userName);
 				validResponse = true;
+				do{
+					System.out.println("Welcome to Guessing Game, " + userName);
+					GuessingGame(userName);
+				} while (!playAgain);
+
 			} else if (gameSel == 2) {
-				System.out.println("Welcome to Reverse Guessing Game, " + userName);
-				ReverseGuessingGame(userName);
 				validResponse = true;
+				do{
+					System.out.println("Welcome to Reverse Guessing Game, " + userName);
+					ReverseGuessingGame(userName);
+				} while (!playAgain);
+				
 			} else if (gameSel == 3) {
 				System.exit(0);
 
@@ -109,7 +116,7 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
-
+		playAgain();
 	}
 
 	// The code for the Reverse Guessing Game
@@ -187,7 +194,8 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
-
+		
+		playAgain();
 	}
 
 	// This method makes sure the range is valid and doesn't complete until its
@@ -265,8 +273,23 @@ public class Main {
 	// guessing game
 	public static int guess(int minval, int maxval) {
 		int guessVal = (maxval + minval) / 2;
-
 		return guessVal;
-
+	}
+	
+	// This method asks if the user would like to play again
+	public static void playAgain (){
+		boolean validResponse = true;
+		do{
+			System.out.println("Would you like to play again?");
+			String response = scan.nextLine();
+			if (response.toLowerCase().equals("yes") || response.toLowerCase().equals("y")){
+				playAgain = true;
+			} else if (response.toLowerCase().equals("no") || response.toLowerCase().equals("n")){
+				playAgain = false;
+			} else{
+				System.out.println("Invalid Response!");
+				validResponse = false;
+			}
+		} while (!validResponse);
 	}
 }
