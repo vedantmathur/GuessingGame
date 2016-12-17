@@ -71,7 +71,7 @@ public class Main {
 
 		System.out.println("Your minimum value is " + minval + ", and your maximum value is " + maxval);
 
-		randomNumberGen = rand.nextInt(maxval) + minval; // Random number
+		randomNumberGen = rand.nextInt((maxval - minval)) + minval; // Random number
 		// assignment,
 		// default is 50
 		System.out.println("I have created a random number between those values. Try to guess!" + randomNumberGen);
