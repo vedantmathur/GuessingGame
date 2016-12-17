@@ -15,6 +15,11 @@ public class Main {
 	public static boolean playAgain = false;
 	public static int minval = 0, maxval = 100, guessCount = 0;
 	public static int[] UserGuesses = new int[1];
+	
+	public static int range = 100;
+	public static int rangeDiff = 100;
+	public static int[] rangeArray = new int[1];
+	public static String verdict = "";
 
 	public static void main(String[] args) {
 
@@ -86,6 +91,7 @@ public class Main {
 			// Register Guess and add to array
 			guessCount++;
 			UserGuesses = addListNum(UserGuesses, guess);
+			efficientGuessing(guess, randomNumberGen);
 
 			if (guess == randomNumberGen)
 				correctGuess = true;
@@ -102,7 +108,7 @@ public class Main {
 
 		} while (!correctGuess);
 		if (correctGuess) {
-			System.out.println("Congrats, " + userName + ", you guessed my number in " + guessCount + " attempts");
+			System.out.println("Congrats, " + userName + ", you guessed my number in " + guessCount + " attempts\n" + verdict);
 		} else {
 			System.out.println("Sorry Bob, you did not guess my number - it's" + randomNumberGen + "!");
 		}
@@ -291,5 +297,27 @@ public class Main {
 				validResponse = false;
 			}
 		} while (!validResponse);
+	}
+	
+	public static void efficientGuessing(int userIn, int actualNumber){
+
+		range = maxval - minval;
+		rangeDiff = Math.abs((actualNumber - userIn));
+		rangeArray = addListNum(rangeArray, rangeDiff);
+		
+		int logarithm = (int) Math.ceil(Math.log(range)/Math.log(2));
+		
+		for (int i = 2; i < rangeArray.length; i++){
+			
+			if (rangeArray[i] < rangeArray[i-1]){
+				verdict = "You guessed methodically";
+			} else if (rangeArray[i] > rangeArray[i-1]){
+				verdict = "You guessed without aim";
+				break;
+			}
+		}
+		if ((rangeArray.length - 1) < ((int)(logarithm-(0.5*logarithm)) )){
+			verdict = "You got lucky!";
+		}
 	}
 }
