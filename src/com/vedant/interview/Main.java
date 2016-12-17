@@ -16,6 +16,7 @@ public class Main {
 	public static int minval = 0, maxval = 100, guessCount = 0;
 	public static int[] UserGuesses = new int[1];
 
+	// BONUS
 	public static int range = 100;
 	public static int rangeDiff = 100;
 	public static int[] rangeArray = new int[1];
@@ -94,6 +95,7 @@ public class Main {
 			UserGuesses = addListNum(UserGuesses, guess);
 			efficientGuessing(guess, randomNumberGen);
 
+			// CHECK GUESS
 			if (guess == randomNumberGen)
 				correctGuess = true;
 			else if (guess < randomNumberGen) {
@@ -124,6 +126,8 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
+		
+		// PLAY AGAIN
 		playAgain();
 	}
 
@@ -156,6 +160,7 @@ public class Main {
 				response = Integer.parseInt(responseString);
 			}
 
+			// CHECK MY GUESS
 			if (response == 3) {
 				System.out.println("Yay! I won!");
 				correctGuess = true;
@@ -203,6 +208,7 @@ public class Main {
 			}
 		}
 
+		// PLAY AGAIN
 		playAgain();
 	}
 
@@ -302,7 +308,7 @@ public class Main {
 		} while (!validResponse);
 	}
 
-	// BONUS
+	// BONUS. This method checks if you were efficient in your guessing. 
 	public static void efficientGuessing(int userIn, int actualNumber) {
 
 		range = maxval - minval;
