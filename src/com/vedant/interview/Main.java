@@ -38,18 +38,16 @@ public class Main {
 			}
 
 			if (gameSel == 1) {
-				validResponse = true;
 				do {
 					System.out.println("Welcome to Guessing Game, " + userName);
 					GuessingGame(userName);
-				} while (!playAgain);
+				} while (playAgain);
 
 			} else if (gameSel == 2) {
-				validResponse = true;
 				do {
 					System.out.println("Welcome to Reverse Guessing Game, " + userName);
 					ReverseGuessingGame(userName);
-				} while (!playAgain);
+				} while (playAgain);
 
 			} else if (gameSel == 3) {
 				System.exit(0);
