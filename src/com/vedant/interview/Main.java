@@ -135,7 +135,7 @@ public class Main {
 			guessCount++;
 			UserGuesses = addListNum(UserGuesses, computerGuess);
 
-			System.out.println("Is your number " + computerGuess + "? \t [1] Too Low, [2] Too High, [3] Correct.");
+			System.out.println("Is your number " + computerGuess + "? \t Enter 1 if my guess was too low, 2 if it's too high, and 3 if it's right on!");
 			String responseString = scan.nextLine();
 			if (isANumber(responseString)) {
 				response = Integer.parseInt(responseString);
@@ -228,8 +228,8 @@ public class Main {
 
 		return arrdone;
 	}
-
-	// This method makes sure the String inputted is indeed a number
+	
+	// This method makes sure the String inputed is indeed a number
 	public static boolean isANumber(String inRange) {
 		try {
 			Integer.parseInt(inRange);
