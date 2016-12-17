@@ -286,6 +286,7 @@ public class Main {
 	public static void playAgain (){
 		boolean validResponse = true;
 		do{
+			System.out.println();
 			System.out.println("Would you like to play again?");
 			String response = scan.nextLine();
 			if (response.toLowerCase().equals("yes") || response.toLowerCase().equals("y")){
