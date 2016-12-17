@@ -117,8 +117,6 @@ public class Main {
 
 		// Reset variables from previous games
 		resetVars();
-		boolean rangeCorrect = false;
-		boolean correctGuess = false;
 		boolean userMislead = false;
 		int response = 0, userActualNumber = 50;
 
