@@ -15,7 +15,7 @@ public class Main {
 	public static boolean playAgain = false;
 	public static int minval = 0, maxval = 100, guessCount = 0;
 	public static int[] UserGuesses = new int[1];
-	
+
 	public static int range = 100;
 	public static int rangeDiff = 100;
 	public static int[] rangeArray = new int[1];
@@ -38,18 +38,18 @@ public class Main {
 
 			if (gameSel == 1) {
 				validResponse = true;
-				do{
+				do {
 					System.out.println("Welcome to Guessing Game, " + userName);
 					GuessingGame(userName);
 				} while (!playAgain);
 
 			} else if (gameSel == 2) {
 				validResponse = true;
-				do{
+				do {
 					System.out.println("Welcome to Reverse Guessing Game, " + userName);
 					ReverseGuessingGame(userName);
 				} while (!playAgain);
-				
+
 			} else if (gameSel == 3) {
 				System.exit(0);
 
@@ -76,7 +76,8 @@ public class Main {
 
 		System.out.println("Your minimum value is " + minval + ", and your maximum value is " + maxval);
 
-		randomNumberGen = rand.nextInt((maxval - minval)) + minval; // Random number
+		randomNumberGen = rand.nextInt((maxval - minval)) + minval; // Random
+																	// number
 		// assignment,
 		// default is 50
 		System.out.println("I have created a random number between those values. Try to guess!" + randomNumberGen);
@@ -108,7 +109,8 @@ public class Main {
 
 		} while (!correctGuess);
 		if (correctGuess) {
-			System.out.println("Congrats, " + userName + ", you guessed my number in " + guessCount + " attempts\n" + verdict);
+			System.out.println(
+					"Congrats, " + userName + ", you guessed my number in " + guessCount + " attempts\n" + verdict);
 		} else {
 			System.out.println("Sorry Bob, you did not guess my number - it's" + randomNumberGen + "!");
 		}
@@ -200,7 +202,7 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
-		
+
 		playAgain();
 	}
 
@@ -281,43 +283,44 @@ public class Main {
 		int guessVal = (maxval + minval) / 2;
 		return guessVal;
 	}
-	
+
 	// This method asks if the user would like to play again
-	public static void playAgain (){
+	public static void playAgain() {
 		boolean validResponse = true;
-		do{
+		do {
 			System.out.println();
 			System.out.println("Would you like to play again?");
 			String response = scan.nextLine();
-			if (response.toLowerCase().equals("yes") || response.toLowerCase().equals("y")){
+			if (response.toLowerCase().equals("yes") || response.toLowerCase().equals("y")) {
 				playAgain = true;
-			} else if (response.toLowerCase().equals("no") || response.toLowerCase().equals("n")){
+			} else if (response.toLowerCase().equals("no") || response.toLowerCase().equals("n")) {
 				playAgain = false;
-			} else{
+			} else {
 				System.out.println("Invalid Response!");
 				validResponse = false;
 			}
 		} while (!validResponse);
 	}
-	
-	public static void efficientGuessing(int userIn, int actualNumber){
+
+	// BONUS
+	public static void efficientGuessing(int userIn, int actualNumber) {
 
 		range = maxval - minval;
 		rangeDiff = Math.abs((actualNumber - userIn));
 		rangeArray = addListNum(rangeArray, rangeDiff);
-		
-		int logarithm = (int) Math.ceil(Math.log(range)/Math.log(2));
-		
-		for (int i = 2; i < rangeArray.length; i++){
-			
-			if (rangeArray[i] < rangeArray[i-1]){
+
+		int logarithm = (int) Math.ceil(Math.log(range) / Math.log(2));
+
+		for (int i = 2; i < rangeArray.length; i++) {
+
+			if (rangeArray[i] < rangeArray[i - 1]) {
 				verdict = "You guessed methodically";
-			} else if (rangeArray[i] > rangeArray[i-1]){
+			} else if (rangeArray[i] > rangeArray[i - 1]) {
 				verdict = "You guessed without aim";
 				break;
 			}
 		}
-		if ((rangeArray.length - 1) < ((int)(logarithm-(0.5*logarithm)) )){
+		if ((rangeArray.length - 1) < ((int) (logarithm - (0.5 * logarithm)))) {
 			verdict = "You got lucky!";
 		}
 	}
