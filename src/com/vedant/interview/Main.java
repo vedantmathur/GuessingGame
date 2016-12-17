@@ -136,7 +136,8 @@ public class Main {
 			guessCount++;
 			UserGuesses = addListNum(UserGuesses, computerGuess);
 
-			System.out.println("Is your number " + computerGuess + "? \t Enter 1 if my guess was too low, 2 if it's too high, and 3 if it's right on!");
+			System.out.println("Is your number " + computerGuess
+					+ "? \t Enter 1 if my guess was too low, 2 if it's too high, and 3 if it's right on!");
 			String responseString = scan.nextLine();
 			if (isANumber(responseString)) {
 				response = Integer.parseInt(responseString);
@@ -155,8 +156,8 @@ public class Main {
 			} else {
 				System.out.println("Incorrect entry");
 			}
-			
-			if (guessCount > MAX_ALLOWED_GUESSES){
+
+			if (guessCount > MAX_ALLOWED_GUESSES) {
 				break;
 			}
 		} while (!correctGuess);
@@ -165,17 +166,17 @@ public class Main {
 		} else {
 			System.out.print("Sorry Bob, I have exceeded my tries. What was your number?: ");
 			String userActualNumberString = scan.nextLine();
-			if (isANumber(userActualNumberString)){
+			if (isANumber(userActualNumberString)) {
 				userActualNumber = Integer.parseInt(userActualNumberString);
 			}
-			for (int i = 0; i < UserGuesses.length; i++){
-				if (UserGuesses[i] == userActualNumber){
+			for (int i = 0; i < UserGuesses.length; i++) {
+				if (UserGuesses[i] == userActualNumber) {
 					userMislead = true;
 				}
 			}
 		}
-		
-		if (userMislead){
+
+		if (userMislead) {
 			System.out.println("I guessed that number!");
 		}
 
@@ -188,8 +189,7 @@ public class Main {
 				System.out.print(", ");
 			}
 		}
-		
-		
+
 	}
 
 	// This method makes sure the range is valid and doesn't complete until its
